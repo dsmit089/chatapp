@@ -31,6 +31,10 @@ app.use("/", function(req, res){
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/health', (req, res) => {
+    res.send('Healthy');
+  });
+
 io.on('connection', (socket) => {
     socket.on('join-user', data => {
         console.log('User joined: ', data,socket.id);
