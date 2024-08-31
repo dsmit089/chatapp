@@ -1,0 +1,36 @@
+# component-config.yaml
+
+apiVersion: v1
+kind: Component
+metadata:
+  name: my-express-app
+  namespace: default
+spec:
+  type: microservice
+  image: my-express-app-image:latest
+  ports:
+    - containerPort: 8000
+  environment:
+    - name: NODE_ENV
+      value: production
+    - name: PORT
+      value: "8000"
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "500m"
+    limits:
+      memory: "512Mi"
+      cpu: "1000m"
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 8000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  readinessProbe:
+    httpGet:
+      path: /health
+      port: 8000
+    initialDelaySeconds: 30
+    periodSeconds: 10
